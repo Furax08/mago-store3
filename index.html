@@ -60,14 +60,19 @@
             let totalUSD = parseFloat(p.precio) * cant;
             let totalBs = (totalUSD * tasa).toLocaleString('es-VE', {minimumFractionDigits: 2});
             
+            // Cálculos con las nuevas referencias
+            let costo = (totalUSD * 0.9426).toFixed(2);
+            let comision = (totalUSD * 0.0235).toFixed(2);
+            let servicio = (totalUSD * 0.0339).toFixed(2);
+            
             let div = document.createElement('div');
             div.className = "factura-final";
             div.innerHTML = `<strong>${msgFactura}</strong><br><strong>${generarOrdenId()}</strong><br><br>
                 <strong>PRODUCTO:</strong><br>• ${p.prod} (x${cant}) ${datos[jIdx].nombre.toUpperCase()}<br><br>
-                <strong>VALOR:</strong><br>
-                • ${(totalUSD * 0.85).toFixed(2)}$ USDT<br>
-                • ${(totalUSD * 0.06).toFixed(2)}$ comisión<br>
-                • ${(totalUSD * 0.09).toFixed(2)}$ costo servicio<br>
+                <strong>DETALLES DE LA COMPRA:</strong><br>
+                • Costo: ${costo}$ USDT<br>
+                • Comisión: ${comision}$<br>
+                • Servicio: ${servicio}$<br>
                 <hr><strong>💰 TOTAL A PAGAR: <span class="monto-highlight">${totalBs} Bs.</span> ✔️</strong>
                 <div class="data-pago" style="white-space: pre-line;">${pagoInfo}</div>`;
             
@@ -77,6 +82,7 @@
             });
         }
 
+        // ... (resto de las funciones sin cambios)
         function copiarRedes(i, tipo) {
             let txt = `¡Oferta ${tipo}! ${datos[i].nombre.toUpperCase()}\n\n`;
             datos[i].productos.forEach(p => txt += `• ${p.prod}: ${(p.precio * tasa).toLocaleString()} Bs.\n`);
